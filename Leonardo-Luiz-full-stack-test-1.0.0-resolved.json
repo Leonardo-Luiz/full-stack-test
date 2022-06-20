@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Task Manager",
+    "description": "Api de tarefas",
+    "contact": {
+      "email": "leoleuiz@hotmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/Leonardo-Luiz/full-stack-test/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "paths": {
+    "/task": {
+      "get": {
+        "summary": "ListaTarefas",
+        "description": "lista Tarefas",
+        "operationId": "listarTarefas",
+        "responses": {
+          "200": {
+            "description": "lista todas as tarefas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tasks"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "error de conexao"
+          }
+        }
+      },
+      "post": {
+        "summary": "adiciona tarefas",
+        "description": "adiciona uma tarefa na api",
+        "operationId": "addTask",
+        "requestBody": {
+          "description": "Tarefa a ser adicionada",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tarefa Criada"
+          },
+          "400": {
+            "description": "Tarefa invalida"
+          },
+          "409": {
+            "description": "tarefa ja existente"
+          }
+        }
+      }
+    },
+    "/task/{id}": {
+      "put": {
+        "summary": "Atualiza Tarefa",
+        "description": "Atualiza Tarefa",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da Tarefa",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Tasks"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefa Atualizada"
+          },
+          "400": {
+            "description": "error de conexao"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta Tarefa",
+        "description": "Deleta uma Tarefa",
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da Tarefa",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Tasks"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefa deletada"
+          },
+          "400": {
+            "description": "error de conexao"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Tasks": {
+        "required": [
+          "id",
+          "ready",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "title": {
+            "type": "string",
+            "example": "Estudar"
+          },
+          "ready": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      }
+    }
+  }
+}
